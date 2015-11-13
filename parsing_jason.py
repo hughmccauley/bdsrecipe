@@ -1,21 +1,32 @@
 import json
+from sets import Set
 
 with open('train.json') as data_file:    
-    data = json.load(data_file)
+    data = json.load(data_file) # list of all recipes 
 
-matrix = [[]]
+lengthTrain = len(data)
 
+ingredientsSet = set()
+cuisineSet = set()
 
+for i in xrange(0, lengthTrain):
+	cuisineSet.add(data[i]['cuisine']) # only 20 distinct cuisines
+	for e in data[i]['ingredients']:
+ 		ingredientsSet.add(e) # 6714 ingredients
+ 
+masterListIngre = list(ingredientsSet) # list of all ingredients in our recipe data file
+masterListCuisine = list(cuisineSet) # list of all cuisines in our data file
 
-for i in data:
+##################################################
+Dict = {} # key: cuisine, val: all its ingredients 
+for a in xrange(0, lengthTrain):
+	for b in masterListCuisine:
+		if b == data[a]['cuisine']:
+			Dict[b] = data[a]['ingredients']
 
-print(data[0])
+##################################################
 
-print(len(data)) # num of recipes = 39774
+print Dict['greek']#[0]
+print Dict['thai']
 
-ingredients = data[0]['ingredients']
-cuisine = data[0]['cuisine']
-
-print(ingredients[0])
-print(cuisine)
-
+data_file.close()
