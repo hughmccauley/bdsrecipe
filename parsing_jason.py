@@ -19,14 +19,20 @@ masterListCuisine = list(cuisineSet) # list of all cuisines in our data file
 
 ##################################################
 Dict = {} # key: cuisine, val: all its ingredients 
-for a in xrange(0, lengthTrain):
-	for b in masterListCuisine:
-		if b == data[a]['cuisine']:
-			Dict[b] = data[a]['ingredients']
+s = set() # temp set to store all unique ingredients for each cuisine
+
+for cui in masterListCuisine:
+	for a in xrange(0, lengthTrain):
+		if cui == data[a]['cuisine']:
+			for c in data[a]['ingredients']:
+				s.add(c)
+					
+	Dict[cui] = list(s);
+	s.clear() # ready to get unique ingre for another cuisine
 
 ##################################################
 
-print Dict['greek']#[0]
+# print Dict['greek']
 print Dict['thai']
 
 data_file.close()
